@@ -292,4 +292,54 @@ public class SortsTests {
         Sorts.eventSort(eventArray, events);
         assertTrue(sorted(eventArray));
     }
+    
+    // Gnome Sort Tests
+    @Test
+    public void testGnomeSort() {
+        testSort(Sorts::gnomeSort);
+    }
+    
+    @Test
+    public void GnomeSort_generic() {
+        Integer[] arr = {5, 2, 4, 6, 1, 3};
+        List<SortEvent<Integer>> events = Sorts.gnomeSort(arr);
+        assertTrue(sorted(arr));
+
+        Integer[] eventArray = Arrays.copyOf(arr, arr.length);
+        Sorts.eventSort(eventArray, events);
+        assertTrue(sorted(eventArray));
+    }
+
+    @Test
+    public void GnomeSort_sortedArray() {
+        Integer[] arr = {1, 2, 3, 4, 5};
+        List<SortEvent<Integer>> events = Sorts.gnomeSort(arr);
+        assertTrue(sorted(arr));
+        
+        Integer[] eventArray = Arrays.copyOf(arr, arr.length);
+        Sorts.eventSort(eventArray, events);
+        assertTrue(sorted(eventArray));
+    }
+
+    @Test
+    public void GnomeSort_duplicates() {
+        Integer[] arr = {3, 1, 2, 3, 2};
+        List<SortEvent<Integer>> events = Sorts.gnomeSort(arr);
+        assertTrue(sorted(arr));
+
+        Integer[] eventArray = Arrays.copyOf(arr, arr.length);
+        Sorts.eventSort(eventArray, events);
+        assertTrue(sorted(eventArray));
+    }
+
+    @Test
+    public void GnomeSort_singleElement() {
+        Integer[] arr = {7};
+        List<SortEvent<Integer>> events = Sorts.gnomeSort(arr);
+        assertTrue(sorted(arr));
+
+        Integer[] eventArray = Arrays.copyOf(arr, arr.length);
+        Sorts.eventSort(eventArray, events);
+        assertTrue(sorted(eventArray));
+    }
 }
