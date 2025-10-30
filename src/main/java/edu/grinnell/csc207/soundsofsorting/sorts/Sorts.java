@@ -229,7 +229,7 @@ public class Sorts {
 
                 swap(arr, currentIndex-1, currentIndex);
                 // Add event
-                events.add(new SwapEvent<>(currentIndex, currentIndex-1));
+                events.add(new SwapEvent<>(currentIndex-1, currentIndex));
 
                 currentIndex--;
                 if (currentIndex == 0) {
@@ -248,9 +248,9 @@ public class Sorts {
      * @param l the array to apply events to
      * @param events the SortEvent list
      */
-    public static <T> void eventSort(T[] l, List<SortEvent<T>> events){
-        for (int i=0; i< l.length; i++) {
-            events.get(i).apply(l);
+    public static <T> void eventSort(T[] l, List<SortEvent<T>> events) {
+        for (SortEvent<T> event : events) {
+            event.apply(l);
         }
     }
 }
