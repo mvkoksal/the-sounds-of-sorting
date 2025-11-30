@@ -1,4 +1,5 @@
 package edu.grinnell.csc207.soundsofsorting;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -24,6 +25,29 @@ public class ArrayPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        // TODO: fill me in!
+        int width = this.getWidth();
+        int height = this.getHeight();
+        // Clear panel
+        g.clearRect(0, 0, width, height);
+
+        Integer[] indices = notes.getNotes();
+        int notesLength = indices.length;
+
+        // Get the width of each rectangle so they fit in the panel
+        int rectWidth = width / notesLength;
+
+        // Draw each rectangle one by one
+        for (int j = 0; j < notesLength; j++) {
+            int x = j * rectWidth;
+            int y = height - indices[j]; // drawing from top to bottom
+
+            // Change color if the index is highlighted
+            if (notes.isHighlighted(j)) {
+                g.setColor(Color.RED);
+            } else {
+                g.setColor(Color.BLACK);
+            }
+            g.fill3DRect(x, y, rectWidth, indices[j], false);
+        }
     }
 }
