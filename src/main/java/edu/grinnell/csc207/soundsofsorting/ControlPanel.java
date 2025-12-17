@@ -2,6 +2,7 @@ package edu.grinnell.csc207.soundsofsorting;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,6 +52,8 @@ public class ControlPanel extends JPanel {
                 return Sorts.mergeSort(arr);
             case("Quick"):
                 return Sorts.quickSort(arr);
+            case("Gnome"):
+                return Sorts.gnomeSort(arr);
             default:
                 throw new IllegalArgumentException("generateEvents");
         }
@@ -100,7 +103,8 @@ public class ControlPanel extends JPanel {
             "Insertion",
             "Bubble",
             "Merge",
-            "Quick"
+            "Quick",
+            "Gnome"
         });
         add(sorts);
         
@@ -137,7 +141,11 @@ public class ControlPanel extends JPanel {
 
                 // Get the selected sort and generateEvents
                 String selectedSort = (String) sorts.getSelectedItem();  // get user choice
-                List<SortEvent<Integer>> events = generateEvents(selectedSort, notes.getNotes());
+                
+                Integer[] notesArray = Arrays.copyOf(notes.getNotes(), notes.getNotes().length);
+                
+                // Generate a list of sort events
+                List<SortEvent<Integer>> events = generateEvents(selectedSort, notesArray);
 
                 // NOTE: The Timer class repetitively invokes a method at a
                 //       fixed interval.  Here we are specifying that method
@@ -155,14 +163,15 @@ public class ControlPanel extends JPanel {
                             Integer[] indices = notes.getNotes();
 
                             e.apply(indices);
+                            notes.clearAllHighlighted();
+
                             List<Integer> affectedIndices = e.getAffectedIndices();
                             for(int i=0; i < affectedIndices.size(); i++) {
                                 // get the affectedIndices of the array of indices
                                 int indicesIndex = affectedIndices.get(i);
-                                // get the index to the MIDI note array
-                                int scaleIndex = indices[indicesIndex];
-                                // get the MIDI note value from the MIDI note array
-                                scale.playNote(scaleIndex, true);
+
+                                // Play note if the index is highlighted
+                                scale.playNote(indicesIndex, notes.isHighlighted(indicesIndex));
                                 notes.highlightNote(indicesIndex);
                             }
 
@@ -174,7 +183,6 @@ public class ControlPanel extends JPanel {
                         }
                     }
                 }, 0, toPeriod(FPS));
-
             }
 
         });

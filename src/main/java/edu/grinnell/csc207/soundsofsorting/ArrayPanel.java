@@ -22,11 +22,16 @@ public class ArrayPanel extends JPanel {
         this.notes = notes;
         this.setPreferredSize(new Dimension(width, height));
     }
-
+    
+    /**
+     * Draws a rectangle for each element in the array being sorted
+     * @param g the screen to draw on
+     */
     @Override
     public void paintComponent(Graphics g) {
-        int width = this.getWidth();
-        int height = this.getHeight();
+
+        int width = getWidth();
+        int height = getHeight();
         // Clear panel
         g.clearRect(0, 0, width, height);
 
@@ -36,18 +41,23 @@ public class ArrayPanel extends JPanel {
         // Get the width of each rectangle so they fit in the panel
         int rectWidth = width / notesLength;
 
+
         // Draw each rectangle one by one
-        for (int j = 0; j < notesLength; j++) {
-            int x = j * rectWidth;
-            int y = height - indices[j]; // drawing from top to bottom
+        for (int i = 0; i < notesLength; i++) {
+            int rectHeight = indices[i]*10;
+
+            int x = i * rectWidth;
+            int y = height - rectHeight; // drawing from top to bottom
 
             // Change color if the index is highlighted
-            if (notes.isHighlighted(j)) {
+            if (notes.isHighlighted(i)) {
                 g.setColor(Color.RED);
             } else {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.CYAN);
             }
-            g.fill3DRect(x, y, rectWidth, indices[j], false);
+
+            // Draw rectangle
+            g.fillRect(x, y, rectWidth, rectHeight);
         }
     }
 }

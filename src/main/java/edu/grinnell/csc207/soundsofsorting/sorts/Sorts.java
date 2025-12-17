@@ -119,8 +119,15 @@ public class Sorts {
         return events;
     }
 
-
-      public static <T extends Comparable<? super T>> void mergeSortHelper(T[] arr, int startIndex, int endIndex, 
+    /**
+     * Sorts the given interval of the array specified by startIndex and endIndex according to the mergeSort algorithm
+     * @param <T>  the carrier type of the array
+     * @param arr the array to sort
+     * @param startIndex the first index of the interval being sorted
+     * @param endIndex the last index of the interval being sorted
+     * @param events the list of sort events being modified
+     */
+    public static <T extends Comparable<? super T>> void mergeSortHelper(T[] arr, int startIndex, int endIndex, 
                                                                             List<SortEvent<T>> events) {
         if((endIndex - startIndex) > 1){
             // Calculate the length of the subarray, then find the midpoint
@@ -173,10 +180,20 @@ public class Sorts {
         return events;
     }
 
+    /**
+     * Sorts the given interval of the array specified by startIndex and endIndex according to the quickSort algorithm
+     * @param <T> the carrier type of the array
+     * @param arr the array to sort
+     * @param startIndex the first index of the interval being sorted
+     * @param endIndex the last index of the interval being sorted
+     * @param events the list of sort events being modified
+     */
     public static <T extends Comparable<? super T>> void quickSortHelper(T[] arr, int startIndex, int endIndex, 
                                                                         List<SortEvent<T>> events){
         if (endIndex - startIndex > 1) {
             int midIndex = (endIndex - startIndex) / 2 + startIndex;
+
+            //Pick a pivot
             T pivot = arr[midIndex];
 
             int i = startIndex;

@@ -11,14 +11,13 @@ public class NoteIndices {
     private boolean[] highlighted;
 
     /**
+     * Initializes the fields of a NoteIndices object.
      * @param n the size of the scale object that these indices map into
      */
     public NoteIndices(int n) {
         indices = new Integer[n];
         highlighted = new boolean[n];
-        for (int i=0; i < highlighted.length; i++){
-            highlighted[i] = false;
-        }
+        clearAllHighlighted();
     }
     
     /**
@@ -27,7 +26,6 @@ public class NoteIndices {
      * initial starting point for the sorting process.
      * @param n the size of the scale object that these indices map into
      */
-
     public void initializeAndShuffle(int n) {
         // Initialize indices
         indices = new Integer[n];
@@ -36,9 +34,7 @@ public class NoteIndices {
         }
         // Initialize highlighted
         highlighted = new boolean[n];
-        for (int i=0; i < highlighted.length; i++){
-            highlighted[i] = false;
-        }
+        clearAllHighlighted();
 
         // Shuffle
         for (int i = indices.length -1; i > 0; i--) {
@@ -63,6 +59,7 @@ public class NoteIndices {
     }
     
     /**
+     * Indicates whether the given index is highlighted
      * @param index the index to check
      * @return true if the given index is highlighted
      */
@@ -73,7 +70,6 @@ public class NoteIndices {
             return false;
         }
     }
-
     
     /** Clears all highlighted indices from this collection */
     public void clearAllHighlighted() {
