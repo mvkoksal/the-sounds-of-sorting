@@ -41,10 +41,22 @@ public class ArrayPanel extends JPanel {
         // Get the width of each rectangle so they fit in the panel
         int rectWidth = width / notesLength;
 
+        // Find the max value
+        int max = indices[0];
+
+        for (int i = 1; i < notesLength; i++) {
+            if (indices[i] > max) {
+                max = indices[i];
+            }
+        }
 
         // Draw each rectangle one by one
         for (int i = 0; i < notesLength; i++) {
-            int rectHeight = indices[i]*10;
+            int rectHeight = 0;
+            if (max != 0) {
+                // Fit the rectangle to the screen
+                rectHeight = (int) (((double) indices[i]/ (double) max) * height);
+            }
 
             int x = i * rectWidth;
             int y = height - rectHeight; // drawing from top to bottom
